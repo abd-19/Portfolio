@@ -46,7 +46,7 @@ export default function SectionTitle({ index, cmd, title }: { index: string; cmd
         0x{(parseInt(index) * 21).toString(16).toUpperCase()} TEXT 0.99
       </div>
       <div data-box className="inline-block border-2 border-fg/60 bg-black/40 px-4 py-2 sm:px-6">
-        <h2 aria-label={title} className="text-4xl font-bold text-fg sm:text-6xl">{title.toUpperCase()}</h2>
+        <h2 data-no-scramble aria-label={title} className="text-4xl font-bold text-fg sm:text-6xl">{title.toUpperCase()}</h2>
       </div>
       <p data-cmd className="mt-4 font-mono text-sm text-muted">
         <span className="text-hud">{index}</span> <span className="text-fg">$</span> {cmd}

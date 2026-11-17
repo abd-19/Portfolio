@@ -10,6 +10,7 @@ const NetworkScene = lazy(() => import('./components/NetworkScene'))
 import Hud from './components/Hud'
 import Tracker from './components/Tracker'
 import TrackTrail from './components/TrackTrail'
+import TextReveal from './components/TextReveal'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Skills from './sections/Skills'
@@ -81,6 +82,7 @@ export default function App() {
       {booted && <Hud />}
       {booted && <Tracker />}
       {booted && <TrackTrail />}
+      {booted && <TextReveal />}
       <main id="main" tabIndex={-1} className="relative z-10 outline-none">
         <Hero ready={booted} />
         <About />
