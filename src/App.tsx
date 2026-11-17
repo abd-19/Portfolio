@@ -58,7 +58,7 @@ export default function App() {
     <div className="scanlines">
       <a
         href="#main"
-        className="sr-only z-[200] bg-redfill px-4 py-2 font-mono text-sm text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        className="sr-only z-[200] bg-hudfill px-4 py-2 font-mono text-sm text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
       >
         Skip to content
       </a>

@@ -76,7 +76,7 @@ export default function BootLoader({ onDone }: { onDone: () => void }) {
               </div>
               <div className="h-1 overflow-hidden bg-line">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-fg to-red"
+                  className="h-full bg-gradient-to-r from-fg to-hud"
                   animate={{ width: `${progress}%` }}
                   transition={{ ease: 'easeOut' }}
                 />

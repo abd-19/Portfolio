@@ -36,7 +36,7 @@ export default function Hero({ ready }: { ready: boolean }) {
         },
       })
 
-      const split = SplitText.create('[data-split]', { type: 'chars' })
+      const split = SplitText.create('[data-split]', { type: 'words,chars' })
       tl.from(split.chars, { y: 80, opacity: 0, rotateX: -90, stagger: 0.03, duration: 0.8 }, 0.1)
       tl.from('[data-fade]', { y: 20, opacity: 0, stagger: 0.1, duration: 0.7 }, 0.6)
       tl.from('[data-box]', { clipPath: 'inset(0 100% 0 0)', duration: 0.6 }, 0.05)
@@ -61,13 +61,13 @@ export default function Hero({ ready }: { ready: boolean }) {
       >
         <div>
           <p data-fade className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-            <span className="rec mr-2 inline-block h-2 w-2 bg-red align-middle" />
+            <span className="rec mr-2 inline-block h-2 w-2 bg-hud align-middle" />
             subject acquired — system online
           </p>
-          <div data-fade aria-hidden className="mt-6 font-mono text-xs font-bold uppercase text-red glow-red">
+          <div data-fade aria-hidden className="mt-6 font-mono text-xs font-bold uppercase text-hud glow-hud">
             0x2A IDENT 0.99
           </div>
-          <div data-box className="relative inline-block border-2 border-red bg-black/40 px-4 py-3 sm:px-6">
+          <div data-box className="relative inline-block border-2 border-hud bg-black/40 px-4 py-3 sm:px-6">
             <h1
               data-split
               className="text-[clamp(2.4rem,6vw,5rem)] font-bold leading-[0.95] text-fg"
@@ -90,13 +90,13 @@ export default function Hero({ ready }: { ready: boolean }) {
           <div data-fade className="mt-8 flex flex-wrap gap-3 font-mono text-sm">
             <a
               href="#projects"
-              className="bg-redfill px-5 py-3 font-bold uppercase tracking-wider text-white transition-colors hover:bg-fg hover:text-bg"
+              className="bg-hudfill px-5 py-3 font-bold uppercase tracking-wider text-black transition-colors hover:bg-fg hover:text-bg"
             >
               ./view-projects.sh
             </a>
             <a
               href="#contact"
-              className="border border-fg/60 px-5 py-3 uppercase tracking-wider text-fg transition-colors hover:border-red hover:text-red"
+              className="border border-fg/60 px-5 py-3 uppercase tracking-wider text-fg transition-colors hover:border-hud hover:text-hud"
             >
               ssh contact
             </a>
@@ -104,7 +104,7 @@ export default function Hero({ ready }: { ready: boolean }) {
           <div data-fade className="mt-10 flex gap-8 font-mono text-xs uppercase tracking-wider text-muted">
             {stats.map((s) => (
               <div key={s.label}>
-                <div className={`text-2xl font-bold ${s.accent ? 'text-red' : 'text-text'}`}>{s.value}</div>
+                <div className={`text-2xl font-bold ${s.accent ? 'text-hud' : 'text-text'}`}>{s.value}</div>
                 {s.label}
               </div>
             ))}

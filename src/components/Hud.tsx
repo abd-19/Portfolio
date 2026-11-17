@@ -88,7 +88,7 @@ export default function Hud() {
               key={s.id}
               href={`#${s.id}`}
               aria-current={active === i + 1 ? 'location' : undefined}
-              className={`px-2 py-1.5 transition-colors hover:text-fg ${active === i + 1 ? 'text-red' : 'text-muted'}`}
+              className={`px-2 py-1.5 transition-colors hover:text-fg ${active === i + 1 ? 'text-hud' : 'text-muted'}`}
             >
               {active === i + 1 ? '▸ ' : ''}
               {s.label}
@@ -98,7 +98,7 @@ export default function Hud() {
 
         <div aria-hidden className="space-y-1 text-right">
           <div>
-            <span className="rec mr-2 inline-block h-2 w-2 bg-red align-middle" />
+            <span className="rec mr-2 inline-block h-2 w-2 bg-hud align-middle" />
             TC <span ref={tcRef}>00:00:00</span>
           </div>
           <div className="text-muted">LATENCY 12 MS</div>
@@ -108,7 +108,7 @@ export default function Hud() {
       {/* bottom-left: section counter like "7 / 20  TRACKING" */}
       <div aria-hidden className="absolute bottom-4 left-4 hidden sm:bottom-6 sm:left-6 sm:block">
         <div className="flex items-stretch">
-          <div className="flex w-12 flex-col items-center justify-center bg-redfill py-1 text-white sm:w-16">
+          <div className="flex w-12 flex-col items-center justify-center bg-hudfill py-1 text-black sm:w-16">
             <AnimatePresence mode="popLayout">
               <motion.span
                 key={active}

@@ -75,13 +75,13 @@ export default function Tracker() {
     <div
       ref={boxRef}
       data-tracker
-      className="pointer-events-none fixed left-0 top-0 z-[70] border border-red transition-[opacity,width,height,transform] duration-150 ease-out"
+      className="pointer-events-none fixed left-0 top-0 z-[70] border border-hud transition-[opacity,width,height,transform] duration-150 ease-out"
       style={{ opacity: 0 }}
       aria-hidden
     >
       <div
         ref={tagRef}
-        className="absolute -top-4 left-[-1px] whitespace-nowrap bg-redfill px-1 font-mono text-[9px] font-bold uppercase leading-4 text-white"
+        className="absolute -top-4 left-[-1px] whitespace-nowrap bg-hudfill px-1 font-mono text-[9px] font-bold uppercase leading-4 text-black"
       />
     </div>
   )

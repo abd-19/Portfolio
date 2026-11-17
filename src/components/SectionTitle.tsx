@@ -42,14 +42,14 @@ export default function SectionTitle({ index, cmd, title }: { index: string; cmd
 
   return (
     <div ref={ref} className="mb-14">
-      <div data-tag aria-hidden className="mb-1 font-mono text-xs font-bold uppercase text-red glow-red">
+      <div data-tag aria-hidden className="mb-1 font-mono text-xs font-bold uppercase text-hud glow-hud">
         0x{(parseInt(index) * 21).toString(16).toUpperCase()} TEXT 0.99
       </div>
-      <div data-box className="inline-block border-2 border-red bg-black/40 px-4 py-2 sm:px-6">
+      <div data-box className="inline-block border-2 border-hud bg-black/40 px-4 py-2 sm:px-6">
         <h2 aria-label={title} className="text-4xl font-bold text-fg sm:text-6xl">{title.toUpperCase()}</h2>
       </div>
       <p data-cmd className="mt-4 font-mono text-sm text-muted">
-        <span className="text-red">{index}</span> <span className="text-fg">$</span> {cmd}
+        <span className="text-hud">{index}</span> <span className="text-fg">$</span> {cmd}
       </p>
     </div>
   )

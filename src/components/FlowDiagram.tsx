@@ -101,11 +101,11 @@ export default function FlowDiagram({
       {/* links: faint base line + red packets flowing along it */}
       {edges.map((e) => (
         <g key={e.i}>
-          <path d={e.d} fill="none" stroke="rgba(242,242,242,0.18)" strokeWidth="1" />
+          <path d={e.d} fill="none" stroke="rgba(220,240,228,0.18)" strokeWidth="1" />
           <path
             d={e.d}
             fill="none"
-            stroke="#ff2a2a"
+            stroke="#3dff8b"
             strokeWidth="1.6"
             strokeDasharray="3 13"
             className="flow-dash"
@@ -126,15 +126,15 @@ export default function FlowDiagram({
               width={b.w - 1}
               height={b.h - 1}
               fill="#131313"
-              stroke={hot ? '#ff2a2a' : 'rgba(242,242,242,0.45)'}
+              stroke={hot ? '#3dff8b' : 'rgba(220,240,228,0.45)'}
               strokeWidth={hot ? 1.5 : 1}
             />
             {/* corner ticks */}
-            <path d={`M${b.x},${b.y + 7} V${b.y} H${b.x + 7}`} fill="none" stroke={hot ? '#ff2a2a' : '#f2f2f2'} strokeWidth="1.5" />
+            <path d={`M${b.x},${b.y + 7} V${b.y} H${b.x + 7}`} fill="none" stroke={hot ? '#3dff8b' : '#dcf0e4'} strokeWidth="1.5" />
             <path
               d={`M${b.x + b.w - 7},${b.y + b.h} H${b.x + b.w} V${b.y + b.h - 7}`}
               fill="none"
-              stroke={hot ? '#ff2a2a' : '#f2f2f2'}
+              stroke={hot ? '#3dff8b' : '#dcf0e4'}
               strokeWidth="1.5"
             />
             <text
@@ -154,14 +154,14 @@ export default function FlowDiagram({
       {/* tracking tag on the focused stage */}
       {lockBox && (
         <g aria-hidden>
-          <rect x={lockBox.x} y={lockBox.y - 17} width={tag.length * 6.4 + 8} height={14} fill="#d81b1b" />
+          <rect x={lockBox.x} y={lockBox.y - 17} width={tag.length * 6.4 + 8} height={14} fill="#2fe57a" />
           <text
             x={lockBox.x + 4}
             y={lockBox.y - 7}
             fontFamily="JetBrains Mono, monospace"
             fontSize="9.5"
             fontWeight="700"
-            fill="#ffffff"
+            fill="#000000"
           >
             {tag}
           </text>

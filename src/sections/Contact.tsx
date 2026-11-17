@@ -48,7 +48,7 @@ export default function Contact() {
           >
             <div className="text-xs text-muted">$ open {k}</div>
             <div className="mt-2 truncate text-fg">{label}</div>
-            <div className="mt-3 text-xs text-muted transition group-hover:text-red">connect →</div>
+            <div className="mt-3 text-xs text-muted transition group-hover:text-hud">connect →</div>
           </a>
           </div>
         ))}

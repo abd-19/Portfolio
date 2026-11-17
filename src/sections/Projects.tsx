@@ -7,8 +7,8 @@ import FlowDiagram from '../components/FlowDiagram'
 import { projects, type Project } from '../data'
 
 const STEPS: [keyof Project, string, string][] = [
-  ['problem', 'Problem', 'text-red'],
-  ['investigation', 'Investigation', 'text-warn'],
+  ['problem', 'Problem', 'text-warn'],
+  ['investigation', 'Investigation', 'text-hud'],
   ['fix', 'Fix', 'text-fg'],
   ['result', 'Result', 'text-ok'],
 ]
@@ -94,7 +94,7 @@ export default function Projects() {
       <article data-featured className="panel brackets grid gap-10 p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <div className="flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-wider">
-            <span className="bg-redfill px-2 py-0.5 font-bold text-white">Featured</span>
+            <span className="bg-hudfill px-2 py-0.5 font-bold text-black">Featured</span>
             <span className="text-muted">{featured.since}</span>
             <span className="text-ok">● Running</span>
           </div>
@@ -123,22 +123,22 @@ export default function Projects() {
               aria-controls="project-detail"
               onClick={() => setOpen(isOpen ? null : p.id)}
               className={`group relative flex flex-col border p-5 text-left transition-colors duration-300 ${
-                isOpen ? 'border-red bg-red/[0.07]' : 'panel hover:border-fg/50'
+                isOpen ? 'border-hud bg-hud/[0.07]' : 'panel hover:border-fg/50'
               }`}
             >
-              <span aria-hidden className="font-mono text-[11px] font-bold uppercase text-red">
+              <span aria-hidden className="font-mono text-[11px] font-bold uppercase text-hud">
                 {hex(i)} TRK 0.9{i + 4}
               </span>
               <span className="mt-2 font-mono text-lg font-bold uppercase tracking-wide text-fg">{p.title}</span>
               <span className="mt-2 flex-1 text-sm leading-relaxed text-muted">{p.summary}</span>
               <span className="mt-4 flex items-center justify-between font-mono text-xs uppercase tracking-wider">
                 <span className="text-ok">● Running</span>
-                <span className={isOpen ? 'text-red' : 'text-fg group-hover:text-red'}>
+                <span className={isOpen ? 'text-hud' : 'text-fg group-hover:text-hud'}>
                   {isOpen ? 'Close report ×' : 'Open report →'}
                 </span>
               </span>
-              <span aria-hidden className={`absolute -left-px -top-px h-3 w-3 border-l-2 border-t-2 ${isOpen ? 'border-red' : 'border-fg/60'}`} />
-              <span aria-hidden className={`absolute -bottom-px -right-px h-3 w-3 border-b-2 border-r-2 ${isOpen ? 'border-red' : 'border-fg/60'}`} />
+              <span aria-hidden className={`absolute -left-px -top-px h-3 w-3 border-l-2 border-t-2 ${isOpen ? 'border-hud' : 'border-fg/60'}`} />
+              <span aria-hidden className={`absolute -bottom-px -right-px h-3 w-3 border-b-2 border-r-2 ${isOpen ? 'border-hud' : 'border-fg/60'}`} />
             </button>
           )
         })}
@@ -154,7 +154,7 @@ export default function Projects() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="panel mt-4 grid gap-10 border-red/40 p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]"
+            className="panel mt-4 grid gap-10 border-hud/40 p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]"
           >
             <div>
               <div className="font-mono text-xs uppercase tracking-wider text-muted">{selected.since}</div>
@@ -181,14 +181,14 @@ export default function Projects() {
       <div className="mt-10 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-mono text-sm text-muted">
           <span className="text-fg">$</span> kubectl get pods -n projects{' '}
-          <span className="text-red">--show-more</span>
+          <span className="text-hud">--show-more</span>
           <span className="mt-2 block font-sans text-base text-text">
             These are just a few examples of my projects. There's more I've built and run.
           </span>
         </p>
         <a
           href="#contact"
-          className="shrink-0 border border-fg/60 px-5 py-3 font-mono text-sm uppercase tracking-wider text-fg transition-colors hover:border-red hover:text-red"
+          className="shrink-0 border border-fg/60 px-5 py-3 font-mono text-sm uppercase tracking-wider text-fg transition-colors hover:border-hud hover:text-hud"
         >
           Ask me about the rest →
         </a>

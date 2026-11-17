@@ -59,7 +59,7 @@ export default function TrackTrail() {
         const a = pts[i - 1]
         const b = pts[i]
         const t = Math.min(a.life, b.life) / LIFE
-        ctx.strokeStyle = `rgba(242, 242, 242, ${0.35 * t})`
+        ctx.strokeStyle = `rgba(220, 240, 228, ${0.35 * t})`
         ctx.beginPath()
         ctx.moveTo(a.x, a.y)
         ctx.lineTo(b.x, b.y)
@@ -71,20 +71,20 @@ export default function TrackTrail() {
       for (const p of pts) {
         const t = p.life / LIFE
         const s = p.red ? 8 : 5
-        ctx.strokeStyle = p.red ? `rgba(255, 42, 42, ${t})` : `rgba(242, 242, 242, ${0.7 * t})`
+        ctx.strokeStyle = p.red ? `rgba(61, 255, 139, ${t})` : `rgba(220, 240, 228, ${0.7 * t})`
         ctx.strokeRect(Math.round(p.x - s / 2) + 0.5, Math.round(p.y - s / 2) + 0.5, s, s)
         if (p.red) {
-          ctx.fillStyle = `rgba(255, 42, 42, ${t})`
+          ctx.fillStyle = `rgba(61, 255, 139, ${t})`
           ctx.fillRect(Math.round(p.x) - 1, Math.round(p.y) - 1, 2, 2)
         }
         if (p.label) {
           // short leader line, then the label
-          ctx.strokeStyle = `rgba(255, 42, 42, ${0.8 * t})`
+          ctx.strokeStyle = `rgba(61, 255, 139, ${0.8 * t})`
           ctx.beginPath()
           ctx.moveTo(p.x + 5, p.y - 5)
           ctx.lineTo(p.x + 16, p.y - 14)
           ctx.stroke()
-          ctx.fillStyle = `rgba(255, 42, 42, ${t})`
+          ctx.fillStyle = `rgba(61, 255, 139, ${t})`
           ctx.fillText(p.label, p.x + 19, p.y - 14)
         }
       }

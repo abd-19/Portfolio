@@ -109,7 +109,7 @@ function Network() {
   return (
     <group ref={group}>
       <lineSegments geometry={lineGeo}>
-        <lineBasicMaterial color="#d9d9d9" transparent opacity={0.14} />
+        <lineBasicMaterial color="#cfe8d8" transparent opacity={0.14} />
       </lineSegments>
 
       {nodes.map((n, i) => {
@@ -118,12 +118,12 @@ function Network() {
           <group key={i} position={n}>
             <mesh>
               <sphereGeometry args={[hub ? 0.11 : 0.05, 16, 16]} />
-              <meshBasicMaterial color={hub ? '#ff2a2a' : '#d9d9d9'} toneMapped={false} />
+              <meshBasicMaterial color={hub ? '#3dff8b' : '#cfe8d8'} toneMapped={false} />
             </mesh>
             <mesh>
               <sphereGeometry args={[hub ? 0.32 : 0.16, 16, 16]} />
               <meshBasicMaterial
-                color={hub ? '#ff2a2a' : '#d9d9d9'}
+                color={hub ? '#3dff8b' : '#cfe8d8'}
                 transparent
                 opacity={hub ? 0.06 : 0.04}
                 blending={THREE.AdditiveBlending}
@@ -136,13 +136,13 @@ function Network() {
 
       <instancedMesh ref={packetsRef} args={[undefined, undefined, PACKET_COUNT]}>
         <sphereGeometry args={[0.035, 8, 8]} />
-        <meshBasicMaterial color="#ff2a2a" toneMapped={false} />
+        <meshBasicMaterial color="#3dff8b" toneMapped={false} />
       </instancedMesh>
 
       {/* faint outer shell */}
       <mesh>
         <icosahedronGeometry args={[RADIUS * 1.25, 2]} />
-        <meshBasicMaterial color="#d9d9d9" wireframe transparent opacity={0.03} />
+        <meshBasicMaterial color="#cfe8d8" wireframe transparent opacity={0.03} />
       </mesh>
     </group>
   )
@@ -172,11 +172,11 @@ export default function NetworkScene() {
         eventSource={document.getElementById('root')!}
         eventPrefix="client"
       >
-        <fog attach="fog" args={['#0b0b0b', 7, 15]} />
+        <fog attach="fog" args={['#050806', 7, 15]} />
         <Network />
       </Canvas>
       {/* vignette so text stays readable */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#0b0b0b_85%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#050806_85%)]" />
     </div>
   )
 }

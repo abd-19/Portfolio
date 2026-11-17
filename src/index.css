@@ -1,17 +1,17 @@
 @import 'tailwindcss';
 
-/* Surveillance / tracking-camera HUD theme: monochrome + signal red */
+/* Surveillance / tracking HUD theme: phosphor green on black, amber for cautions */
 @theme {
-  --color-bg: #0b0b0b;
-  --color-panel: #131313;
-  --color-line: #2c2c2c;
-  --color-fg: #f2f2f2;
-  --color-red: #ff2a2a; /* red text on dark: 5.3:1 */
-  --color-redfill: #d81b1b; /* red backgrounds behind white text: 5.1:1 */
-  --color-ok: #e6e6e6;
-  --color-warn: #ff2a2a;
-  --color-muted: #8c8c8c;
-  --color-text: #e4e4e4;
+  --color-bg: #050806;
+  --color-panel: #0a110c;
+  --color-line: #1e2c23;
+  --color-fg: #eef7f0;
+  --color-hud: #3dff8b; /* HUD green text on dark: ~14:1 */
+  --color-hudfill: #2fe57a; /* green backgrounds, always with black text: ~12:1 */
+  --color-ok: #b8f5cc;
+  --color-warn: #ffb020; /* master caution amber */
+  --color-muted: #86998c;
+  --color-text: #dbe8df;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-sans: 'Inter Tight', system-ui, sans-serif;
 }
@@ -33,7 +33,7 @@ body {
 
 /* visible keyboard focus everywhere (WCAG 2.4.7) */
 :focus-visible {
-  outline: 2px solid var(--color-red);
+  outline: 2px solid var(--color-hud);
   outline-offset: 3px;
 }
 
@@ -43,8 +43,8 @@ button,
 }
 
 ::selection {
-  background: var(--color-red);
-  color: #fff;
+  background: var(--color-hud);
+  color: #000;
 }
 
 h1,
@@ -63,24 +63,24 @@ h3 {
   pointer-events: none;
   z-index: 60;
   background: repeating-linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.018) 0px,
-      rgba(255, 255, 255, 0.018) 1px,
+      to bottom,
+      rgba(61, 255, 139, 0.022) 0px,
+      rgba(61, 255, 139, 0.022) 1px,
       transparent 1px,
-      transparent 4px
+      transparent 3px
     ),
     radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 .glow-fg {
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+  text-shadow: 0 0 10px rgba(200, 255, 220, 0.3);
 }
-.glow-red {
-  text-shadow: 0 0 10px rgba(255, 42, 42, 0.6);
+.glow-hud {
+  text-shadow: 0 0 8px rgba(61, 255, 139, 0.55);
 }
 
 .panel {
-  background: rgba(14, 14, 14, 0.82);
+  background: rgba(8, 14, 10, 0.82);
   border: 1px solid var(--color-line);
   backdrop-filter: blur(6px);
 }
@@ -112,8 +112,8 @@ h3 {
 }
 
 .grid-bg {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(61, 255, 139, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61, 255, 139, 0.035) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
@@ -135,7 +135,7 @@ h3 {
   display: inline-block;
   width: 0.6em;
   height: 1.1em;
-  background: var(--color-red);
+  background: var(--color-hud);
   vertical-align: text-bottom;
   animation: blink 1s steps(1) infinite;
 }
@@ -172,11 +172,11 @@ h3 {
   opacity: 0.7;
 }
 .glitch::before {
-  color: var(--color-red);
+  color: var(--color-hud);
   animation: glitch 2.5s infinite linear alternate-reverse;
 }
 .glitch::after {
-  color: #9a9a9a;
+  color: #7fa38b;
   animation: glitch 3s infinite linear alternate;
 }
 

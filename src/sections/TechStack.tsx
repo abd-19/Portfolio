@@ -104,9 +104,9 @@ function Chip({ logo }: { logo: Logo }) {
   return (
     <div
       data-lock
-      className="group flex shrink-0 items-center gap-3 border border-line bg-panel/85 px-5 py-4 transition-colors duration-200 hover:border-red"
+      className="group flex shrink-0 items-center gap-3 border border-line bg-panel/85 px-5 py-4 transition-colors duration-200 hover:border-hud"
     >
-      <Mark logo={logo} className="h-8 w-8 text-fg/85 transition-colors duration-200 group-hover:text-red" />
+      <Mark logo={logo} className="h-8 w-8 text-fg/85 transition-colors duration-200 group-hover:text-hud" />
       <span className="whitespace-nowrap font-mono text-sm uppercase tracking-wider text-muted transition-colors group-hover:text-fg">
         {logo.title}
       </span>
@@ -182,7 +182,7 @@ export default function TechStack() {
         ))}
 
       <div className="relative mx-auto mb-10 max-w-6xl px-4 sm:px-6">
-        <div aria-hidden className="font-mono text-xs font-bold uppercase text-red glow-red">
+        <div aria-hidden className="font-mono text-xs font-bold uppercase text-hud glow-hud">
           0x7E TRACKING {total} OBJECTS
         </div>
         <h2 id="stack-title" className="mt-1 text-2xl font-bold text-fg sm:text-3xl">

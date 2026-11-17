@@ -24,7 +24,7 @@ const COMMANDS: Record<string, { help: string; run: () => ReactNode }> = {
     help: 'who am I',
     run: () => (
       <span>
-        <span className="text-red">{profile.name}</span> — {profile.shortRole} at Earthlink ISP, {profile.location}.
+        <span className="text-hud">{profile.name}</span> — {profile.shortRole} at Earthlink ISP, {profile.location}.
         Linux, private cloud, monitoring and automation.
       </span>
     ),
@@ -47,7 +47,7 @@ const COMMANDS: Record<string, { help: string; run: () => ReactNode }> = {
       <div>
         {skillGroups.map((g) => (
           <div key={g.label}>
-            <span className="text-red">{g.label.toLowerCase()}:</span> {g.tools.join(', ')}
+            <span className="text-hud">{g.label.toLowerCase()}:</span> {g.tools.join(', ')}
           </div>
         ))}
       </div>
@@ -59,7 +59,7 @@ const COMMANDS: Record<string, { help: string; run: () => ReactNode }> = {
       <div>
         {certs.map((c) => (
           <div key={c.short}>
-            <span className="text-red">{c.short}</span> {c.name}{' '}
+            <span className="text-hud">{c.short}</span> {c.name}{' '}
             <span className="text-muted">#{c.id}</span>
           </div>
         ))}
@@ -96,7 +96,7 @@ const COMMANDS: Record<string, { help: string; run: () => ReactNode }> = {
   },
   'sudo rm -rf /': {
     help: "don't.",
-    run: () => <span className="text-red">Nice try. This incident has been reported.</span>,
+    run: () => <span className="text-hud">Nice try. This incident has been reported.</span>,
   },
   clear: { help: 'clear the screen', run: () => null },
 }
@@ -135,7 +135,7 @@ export default function Terminal({ start }: { start: boolean }) {
       out = <span className="text-muted">navigating to /{NAV[cmd]} ...</span>
     } else
       out = (
-        <span className="text-red">
+        <span className="text-hud">
           bash: {cmd}: command not found — try <span className="text-fg">help</span>
         </span>
       )
@@ -213,11 +213,11 @@ export default function Terminal({ start }: { start: boolean }) {
 
   return (
     <div
-      className="panel brackets overflow-hidden font-mono text-[13px] transition-colors focus-within:border-red sm:text-sm"
+      className="panel brackets overflow-hidden font-mono text-[13px] transition-colors focus-within:border-hud sm:text-sm"
       onClick={() => inputRef.current?.focus()}
     >
       <div aria-hidden className="flex items-center gap-2 border-b border-line px-4 py-2.5">
-        <span className="h-3 w-3 rounded-full bg-red" />
+        <span className="h-3 w-3 rounded-full bg-hud" />
         <span className="h-3 w-3 rounded-full bg-muted" />
         <span className="h-3 w-3 rounded-full bg-muted" />
         <span className="ml-3 text-xs text-muted">guest@{profile.handle}: ~ — bash</span>
