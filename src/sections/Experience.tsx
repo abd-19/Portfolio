@@ -1,8 +1,106 @@
-import { useRef } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { AnimatePresence, motion } from 'motion/react'
 import SectionTitle from '../components/SectionTitle'
-import { experience } from '../data'
+import { experience, type Job } from '../data'
+
+function Bullets({ points, bright = false }: { points: string[]; bright?: boolean }) {
+  return (
+    <>
+      {points.map((pt) => (
+        <li key={pt} className={`flex gap-3 leading-relaxed ${bright ? 'text-text/90' : 'text-muted'}`}>
+          <span aria-hidden className="mt-2.5 h-1 w-1 shrink-0 bg-fg/40" />
+          {pt}
+        </li>
+      ))}
+    </>
+  )
+}
+
+// Big numbers for the current role; they count up when scrolled into view
+function Highlights({ items }: { items: NonNullable<Job['highlights']> }) {
+  return (
+    <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+      {items.map((h) => {
+        const n = parseInt(h.value, 10)
+        const suffix = h.value.replace(String(n), '')
+        return (
+          <li key={h.label} className="flex items-center gap-4 border border-line bg-black/30 px-4 py-3 sm:block sm:p-4">
+            <div className="w-16 shrink-0 font-mono text-2xl font-bold text-hud glow-hud sm:w-auto sm:text-4xl">
+              <span data-count={n}>{n}</span>
+              {suffix}
+            </div>
+            <div className="text-sm text-muted sm:mt-1">{h.label}</div>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
+// Responsibilities split by topic: keyboard-friendly tabs (arrow keys move between them)
+function Topics({ id, groups }: { id: string; groups: NonNullable<Job['groups']> }) {
+  const [sel, setSel] = useState(0)
+  const tabs = useRef<(HTMLButtonElement | null)[]>([])
+
+  const onKey = (e: KeyboardEvent) => {
+    const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+    if (!step) return
+    e.preventDefault()
+    const next = (sel + step + groups.length) % groups.length
+    setSel(next)
+    tabs.current[next]?.focus()
+  }
+
+  const g = groups[sel]
+  return (
+    <div className="mt-7">
+      <p aria-hidden className="font-mono text-xs text-muted">
+        <span className="text-fg">$</span> grep -i "<span className="text-hud">{g.label.toLowerCase()}</span>" career.log
+      </p>
+      <div role="tablist" aria-label="Responsibilities by topic" className="mt-3 flex flex-wrap gap-2" onKeyDown={onKey}>
+        {groups.map((t, j) => {
+          const on = j === sel
+          return (
+            <button
+              key={t.label}
+              ref={(el) => {
+                tabs.current[j] = el
+              }}
+              role="tab"
+              id={`${id}-tab-${j}`}
+              aria-selected={on}
+              aria-controls={`${id}-panel`}
+              tabIndex={on ? 0 : -1}
+              onClick={() => setSel(j)}
+              className={`min-h-10 border px-3 font-mono text-xs uppercase tracking-wider transition-colors ${
+                on ? 'border-hud bg-hud/10 text-hud' : 'border-line text-muted hover:border-fg/50 hover:text-fg'
+              }`}
+            >
+              {t.label} <span className="ml-1 opacity-60">{t.points.length}</span>
+            </button>
+          )
+        })}
+      </div>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.ul
+          key={sel}
+          id={`${id}-panel`}
+          role="tabpanel"
+          aria-labelledby={`${id}-tab-${sel}`}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.2 }}
+          className="mt-5 space-y-3"
+        >
+          <Bullets points={g.points} bright />
+        </motion.ul>
+      </AnimatePresence>
+    </div>
+  )
+}
 
 export default function Experience() {
   const ref = useRef<HTMLElement>(null)
@@ -20,12 +118,24 @@ export default function Experience() {
         },
       )
       gsap.utils.toArray<HTMLElement>('[data-entry]').forEach((el) => {
-        gsap.from(el, {
-          x: 40,
-          opacity: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 82%' },
+        gsap.fromTo(
+          el,
+          { x: 40, autoAlpha: 0 },
+          { x: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 82%' } },
+        )
+      })
+      // headline numbers count up from zero
+      gsap.utils.toArray<HTMLElement>('[data-count]').forEach((el) => {
+        const end = Number(el.dataset.count)
+        const state = { v: 0 }
+        gsap.to(state, {
+          v: end,
+          duration: 1.4,
+          ease: 'power2.out',
+          onUpdate: () => {
+            el.textContent = String(Math.round(state.v))
+          },
+          scrollTrigger: { trigger: el, start: 'top 85%' },
         })
       })
     },
@@ -38,32 +148,40 @@ export default function Experience() {
       <div data-log className="relative pl-8 sm:pl-12">
         <div
           data-line
-          className="absolute left-2 top-0 h-full w-px origin-top bg-gradient-to-b from-fg via-hud to-transparent sm:left-4"
+          className="absolute left-2 top-0 h-full w-px origin-top bg-gradient-to-b from-hud via-fg/30 to-transparent sm:left-4"
         />
         <div className="space-y-10">
-          {experience.map((e) => (
-            <div data-entry key={e.time} className="relative">
-              <span className="absolute -left-[29px] top-2 h-3 w-3 border-2 border-hud bg-bg sm:-left-[37px]" />
-              <div className="panel p-5 sm:p-6">
-                <div className="font-mono text-xs text-muted">
-                  [{e.time}]{' '}
-                  <span className={e.level === 'EDU' ? 'text-hud' : 'text-ok'}>{e.level}</span>{' '}
-                  {e.level === 'EDU' ? 'education.service' : 'career.service'}:
+          {experience.map((e, k) => {
+            const current = e.time.includes('now')
+            return (
+              <div data-entry key={e.time} className="relative">
+                <span
+                  className={`absolute -left-[29px] top-2 h-3 w-3 border-2 bg-bg sm:-left-[37px] ${
+                    current ? 'border-hud shadow-[0_0_10px_rgba(61,255,139,0.7)]' : 'border-fg/40'
+                  }`}
+                />
+                <div className={`panel p-5 sm:p-6 ${current ? 'sm:p-8' : ''}`}>
+                  <div className="font-mono text-xs text-muted">
+                    [{e.time}]{' '}
+                    <span className={e.level === 'EDU' ? 'text-warn' : 'text-ok'}>{e.level}</span>{' '}
+                    {e.level === 'EDU' ? 'education.service' : 'career.service'}:
+                    {current && <span className="ml-2 text-hud">● active</span>}
+                  </div>
+                  <h3 className={`mt-2 font-bold ${current ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+                    {e.title} <span className={current ? 'text-hud' : 'text-muted'}>@ {e.company}</span>
+                  </h3>
+                  {e.highlights && <Highlights items={e.highlights} />}
+                  {e.groups ? (
+                    <Topics id={`job-${k}`} groups={e.groups} />
+                  ) : (
+                    <ul className="mt-4 space-y-2">
+                      <Bullets points={e.points} />
+                    </ul>
+                  )}
                 </div>
-                <h3 className="mt-2 text-xl font-bold sm:text-2xl">
-                  {e.title} <span className="text-hud">@ {e.company}</span>
-                </h3>
-                <ul className={`mt-4 grid gap-x-8 gap-y-2 text-muted ${e.points.length > 5 ? 'lg:grid-cols-2' : ''}`}>
-                  {e.points.map((pt) => (
-                    <li key={pt} className="flex gap-3 leading-relaxed">
-                      <span aria-hidden className="mt-2.5 h-1 w-1 shrink-0 bg-hud" />
-                      {pt}
-                    </li>
-                  ))}
-                </ul>
               </div>
-            </div>
-          ))}
+            )
+          })}
           <div data-entry className="font-mono text-sm text-muted">
             [now] <span className="text-warn">WAIT</span> next role: <span className="text-fg">your company?</span>
             <span className="caret ml-1" />

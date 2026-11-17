@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { useGSAP } from '@gsap/react'
 import Terminal from '../components/Terminal'
+import CamFeed from '../components/CamFeed'
 import { profile, stats } from '../data'
 import { reducedMotion } from '../motion'
 
@@ -111,7 +112,8 @@ export default function Hero({ ready }: { ready: boolean }) {
           </div>
         </div>
         <div data-term>
-          <Terminal start={ready} />
+          {profile.photo && <CamFeed start={ready} />}
+          <Terminal start={ready} compact={!!profile.photo} />
           <p className="mt-3 text-center font-mono text-xs text-muted">
             ↑ it's a real terminal — type <span className="text-fg">help</span>
           </p>

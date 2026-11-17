@@ -126,7 +126,7 @@ export default function Projects() {
                 isOpen ? 'border-hud bg-hud/[0.07]' : 'panel hover:border-fg/50'
               }`}
             >
-              <span aria-hidden className="font-mono text-[11px] font-bold uppercase text-hud">
+              <span aria-hidden className={`font-mono text-[11px] font-bold uppercase ${isOpen ? 'text-hud' : 'text-muted'}`}>
                 {hex(i)} TRK 0.9{i + 4}
               </span>
               <span className="mt-2 font-mono text-lg font-bold uppercase tracking-wide text-fg">{p.title}</span>

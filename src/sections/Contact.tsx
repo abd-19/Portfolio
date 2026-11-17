@@ -44,7 +44,7 @@ export default function Contact() {
             href={href}
             target={external ? '_blank' : undefined}
             rel="noreferrer"
-            className="panel group block p-5 transition hover:-translate-y-1 hover:border-fg hover:shadow-[0_0_30px_-8px_rgba(255,255,255,0.6)]"
+            className="panel group block p-5 transition hover:-translate-y-1 hover:border-hud hover:shadow-[0_0_30px_-10px_rgba(61,255,139,0.7)]"
           >
             <div className="text-xs text-muted">$ open {k}</div>
             <div className="mt-2 truncate text-fg">{label}</div>

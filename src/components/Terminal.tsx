@@ -110,7 +110,7 @@ const NAV: Record<string, string> = {
 
 const INTRO = ['whoami', 'help']
 
-export default function Terminal({ start }: { start: boolean }) {
+export default function Terminal({ start, compact = false }: { start: boolean; compact?: boolean }) {
   const [lines, setLines] = useState<Line[]>([])
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<string[]>([])
@@ -227,7 +227,7 @@ export default function Terminal({ start }: { start: boolean }) {
         role="log"
         aria-live="polite"
         aria-label="Terminal output"
-        className="h-[300px] space-y-1.5 overflow-y-auto p-4 sm:h-[340px]"
+        className={`space-y-1.5 overflow-y-auto p-4 ${compact ? 'h-[240px] sm:h-[220px]' : 'h-[300px] sm:h-[340px]'}`}
       >
         {lines.map((l, i) =>
           l.kind === 'in' ? (

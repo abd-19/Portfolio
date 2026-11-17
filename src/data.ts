@@ -17,6 +17,10 @@ export const profile = {
   email: 'ninjaosnnxkn@gmail.com',
   github: '', // add your GitHub URL here to show it on the site
   linkedin: 'https://linkedin.com/in/abdullah-mohammed-552159302',
+  // Hero camera feed. Put your photo in /public and set its file name here ('' hides the feed).
+  photo: '',
+  // where the face sits in the photo, in % of the image: the tracking box locks onto this
+  face: { x: 30, y: 14, w: 40, h: 46 },
 }
 
 // Headline numbers shown in the hero — every one comes straight from the CV
@@ -230,7 +234,49 @@ export type Job = {
   title: string
   company: string
   points: string[]
+  highlights?: { value: string; label: string }[] // big numbers above the bullets
+  groups?: { label: string; points: string[] }[] // when set, bullets are shown by topic (tabs)
 }
+
+// Current role's bullets, grouped by topic for the Experience tabs
+const sysadminGroups = [
+  {
+    label: 'Cloud & servers',
+    points: [
+      'Manage and maintain physical and virtual servers, ensuring high availability, performance and scalability.',
+      'Manage and maintain Dell, Cisco and HPE server hardware.',
+      'Design, deploy and operate an on-premises private cloud built on Apache CloudStack with KVM hypervisors (50+ hosts): capacity planning, host lifecycle management and VM provisioning.',
+      'Deploy and manage containerized workloads using Kubernetes, Docker and Podman.',
+      'Administer Linux systems (RHEL / CentOS / AlmaLinux / Rocky / Ubuntu): installation, configuration, patching, hardening and troubleshooting.',
+    ],
+  },
+  {
+    label: 'Monitoring',
+    points: [
+      'Deployed Zabbix and maintain and administer 20+ Zabbix proxies reporting to one Zabbix server, with custom templates, items and triggers to monitor infrastructure availability and performance.',
+      'Deploy and manage Grafana and Prometheus for metrics collection and visualization, with service-specific exporters.',
+      'Built GitOps storage monitoring for 4 arrays (Pure FlashArray, Pure FlashBlade, 2× Dell PowerStore): one ArgoCD application syncing a Kustomize base with 4 overlays to Kubernetes, scraped by Prometheus and shown in Grafana.',
+      'Monitor system performance, resource utilization and network traffic to proactively find and resolve issues.',
+    ],
+  },
+  {
+    label: 'Automation',
+    points: [
+      'Automate repetitive tasks and monitoring workflows with Ansible and Bash to reduce downtime and manual effort.',
+      'Built self-healing for IP cameras: Zabbix detects cameras that ping but send no image and triggers a GitLab pipeline; a Python script finds each camera on the site\'s PoE switches, power-cycles its port, re-tests it and opens a ticket if it stays down.',
+      'Design and maintain GitLab CI/CD pipelines to automate deployments and streamline development workflows.',
+      'Built self-service VM provisioning: a Microsoft Teams form goes through a Power Automate approval to me, then triggers a GitLab CI pipeline that creates the VM on the cloud with an Ansible cloud module, using the form details.',
+    ],
+  },
+  {
+    label: 'Operations',
+    points: [
+      'Coordinate with cross-functional teams on system upgrades, migrations and new service deployments.',
+      'Maintain documentation of infrastructure configurations, incidents and resolutions for knowledge management.',
+      'Implement and regularly test backup, disaster-recovery and business-continuity plans.',
+    ],
+  },
+]
 
 export const experience: Job[] = [
   {
@@ -238,24 +284,13 @@ export const experience: Job[] = [
     level: 'INFO',
     title: 'IT System Administrator',
     company: 'Earthlink ISP',
-    points: [
-      'Manage and maintain physical and virtual servers, ensuring high availability, performance and scalability.',
-      'Manage and maintain Dell, Cisco and HPE server hardware.',
-      'Design, deploy and operate an on-premises private cloud built on Apache CloudStack with KVM hypervisors (50+ hosts): capacity planning, host lifecycle management and VM provisioning.',
-      'Deploy and manage containerized workloads using Kubernetes, Docker and Podman.',
-      'Administer Linux systems (RHEL / CentOS / AlmaLinux / Rocky / Ubuntu): installation, configuration, patching, hardening and troubleshooting.',
-      'Deployed Zabbix and maintain and administer 20+ Zabbix proxies reporting to one Zabbix server, with custom templates, items and triggers to monitor infrastructure availability and performance.',
-      'Deploy and manage Grafana and Prometheus for metrics collection and visualization, with service-specific exporters.',
-      'Built GitOps storage monitoring for 4 arrays (Pure FlashArray, Pure FlashBlade, 2× Dell PowerStore): one ArgoCD application syncing a Kustomize base with 4 overlays to Kubernetes, scraped by Prometheus and shown in Grafana.',
-      'Automate repetitive tasks and monitoring workflows with Ansible and Bash to reduce downtime and manual effort.',
-      'Built self-healing for IP cameras: Zabbix detects cameras that ping but send no image and triggers a GitLab pipeline; a Python script finds each camera on the site\'s PoE switches, power-cycles its port, re-tests it and opens a ticket if it stays down.',
-      'Design and maintain GitLab CI/CD pipelines to automate deployments and streamline development workflows.',
-      'Built self-service VM provisioning: a Microsoft Teams form goes through a Power Automate approval to me, then triggers a GitLab CI pipeline that creates the VM on the cloud with an Ansible cloud module, using the form details.',
-      'Monitor system performance, resource utilization and network traffic to proactively find and resolve issues.',
-      'Coordinate with cross-functional teams on system upgrades, migrations and new service deployments.',
-      'Maintain documentation of infrastructure configurations, incidents and resolutions for knowledge management.',
-      'Implement and regularly test backup, disaster-recovery and business-continuity plans.',
+    points: sysadminGroups.flatMap((g) => g.points),
+    highlights: [
+      { value: '50+', label: 'KVM hosts in the private cloud' },
+      { value: '20+', label: 'Zabbix proxies, one server' },
+      { value: '4', label: 'storage arrays on GitOps monitoring' },
     ],
+    groups: sysadminGroups,
   },
   {
     time: '2024-06 → 2025-05',

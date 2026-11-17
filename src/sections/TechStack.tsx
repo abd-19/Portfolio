@@ -182,7 +182,7 @@ export default function TechStack() {
         ))}
 
       <div className="relative mx-auto mb-10 max-w-6xl px-4 sm:px-6">
-        <div aria-hidden className="font-mono text-xs font-bold uppercase text-hud glow-hud">
+        <div aria-hidden className="font-mono text-xs font-bold uppercase text-muted">
           0x7E TRACKING {total} OBJECTS
         </div>
         <h2 id="stack-title" className="mt-1 text-2xl font-bold text-fg sm:text-3xl">
