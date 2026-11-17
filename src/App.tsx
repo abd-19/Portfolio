@@ -11,6 +11,7 @@ import Hud from './components/Hud'
 import Tracker from './components/Tracker'
 import TrackTrail from './components/TrackTrail'
 import TextReveal from './components/TextReveal'
+import FloatingLogos from './components/FloatingLogos'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Skills from './sections/Skills'
@@ -79,6 +80,7 @@ export default function App() {
         <NetworkScene />
       </Suspense>
       <div className="grid-bg pointer-events-none fixed inset-0 z-0 opacity-40" />
+      {booted && <FloatingLogos />}
       {booted && <Hud />}
       {booted && <Tracker />}
       {booted && <TrackTrail />}
