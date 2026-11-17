@@ -1,0 +1,199 @@
+@import 'tailwindcss';
+
+/* Surveillance / tracking-camera HUD theme: monochrome + signal red */
+@theme {
+  --color-bg: #0b0b0b;
+  --color-panel: #131313;
+  --color-line: #2c2c2c;
+  --color-fg: #f2f2f2;
+  --color-red: #ff2a2a; /* red text on dark: 5.3:1 */
+  --color-redfill: #d81b1b; /* red backgrounds behind white text: 5.1:1 */
+  --color-ok: #e6e6e6;
+  --color-warn: #ff2a2a;
+  --color-muted: #8c8c8c;
+  --color-text: #e4e4e4;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Inter Tight', system-ui, sans-serif;
+}
+
+html {
+  scroll-padding-top: 6rem; /* keep anchored/focused content clear of the fixed HUD */
+  scroll-padding-bottom: 7rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--color-bg);
+}
+
+/* visible keyboard focus everywhere (WCAG 2.4.7) */
+:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+button,
+[role='button'] {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-red);
+  color: #fff;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Vertical video-line texture + soft vignette over everything */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  background: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.018) 0px,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+.glow-fg {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+}
+.glow-red {
+  text-shadow: 0 0 10px rgba(255, 42, 42, 0.6);
+}
+
+.panel {
+  background: rgba(14, 14, 14, 0.82);
+  border: 1px solid var(--color-line);
+  backdrop-filter: blur(6px);
+}
+
+/* HUD corner brackets on any element */
+.brackets {
+  position: relative;
+}
+.brackets::before,
+.brackets::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--color-fg);
+  pointer-events: none;
+}
+.brackets::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.brackets::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+.grid-bg {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Barcode strip like the HUD in the reference */
+.barcode {
+  height: 18px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-fg) 0 2px,
+    transparent 2px 4px,
+    var(--color-fg) 4px 5px,
+    transparent 5px 8px,
+    var(--color-fg) 8px 11px,
+    transparent 11px 12px
+  );
+}
+
+.caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  background: var(--color-red);
+  vertical-align: text-bottom;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes rec {
+  50% {
+    opacity: 0.2;
+  }
+}
+.rec {
+  opacity: 0.9;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+  20% { transform: translate(-3px, 0); clip-path: inset(10% 0 60% 0); }
+  40% { transform: translate(3px, 0); clip-path: inset(50% 0 20% 0); }
+  60% { transform: translate(-2px, 0); clip-path: inset(30% 0 40% 0); }
+  80% { transform: translate(2px, 0); clip-path: inset(70% 0 5% 0); }
+}
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+}
+.glitch::before {
+  color: var(--color-red);
+  animation: glitch 2.5s infinite linear alternate-reverse;
+}
+.glitch::after {
+  color: #9a9a9a;
+  animation: glitch 3s infinite linear alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* packets flowing along architecture-diagram links (frozen by the reduced-motion rule above) */
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+.flow-dash {
+  animation: flow-dash 1.1s linear infinite;
+}
