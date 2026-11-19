@@ -79,7 +79,7 @@ export function Mark({ logo, className }: { logo: Logo; className: string }) {
     return (
       <svg viewBox="0 0 24 24" className={className} aria-hidden>
         <rect x="1.5" y="1.5" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="2" />
-        <text x="12" y="17.5" textAnchor="middle" fontSize="15" fontWeight="700" fontFamily="JetBrains Mono, monospace" fill="currentColor">
+        <text x="12" y={logo.letter && logo.letter.length > 1 ? 16 : 17.5} textAnchor="middle" fontSize={logo.letter && logo.letter.length > 1 ? 10 : 15} fontWeight="700" fontFamily="JetBrains Mono, monospace" fill="currentColor">
           {logo.letter}
         </text>
       </svg>

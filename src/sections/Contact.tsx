@@ -30,12 +30,12 @@ export default function Contact() {
 
   return (
     <section id="contact" ref={ref} className="relative mx-auto max-w-6xl px-4 pb-44 pt-32 sm:px-6">
-      <SectionTitle index="05" cmd="ssh guest@contact" title="Get in touch" />
+      <SectionTitle index="06" cmd="ssh guest@contact" title="Get in touch" />
       <h3 data-big className="text-5xl font-bold leading-tight sm:text-7xl">
         Let's keep it running.
       </h3>
       <p className="mt-6 max-w-xl text-lg text-muted">
-        Need someone to build, automate or rescue your infrastructure? My inbox is always listening on port 25.
+        Need infrastructure built, automated or rescued? My inbox listens on port 25.
       </p>
       <div data-links className={`mt-10 grid gap-4 font-mono ${contactLinks.length > 2 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
         {contactLinks.map(({ key: k, label, href, external }) => (

@@ -10,9 +10,8 @@ export const profile = {
   years: 4,
   tagline: 'I run the Linux servers, private cloud and monitoring that keep an ISP online.',
   about: [
-    'IT and Computer Engineering graduate with hands-on experience in Linux system administration (RHEL / CentOS / AlmaLinux / Rocky / Ubuntu), server infrastructure, network operations and IT automation.',
-    'Certified Red Hat System Administrator (RHCSA), Red Hat Certified Engineer in Enterprise Linux and in Ansible, Red Hat Certified Advanced System Administrator in Ansible, and Zabbix Certified Specialist (ZCS).',
-    'Proven ability to deploy and manage monitoring stacks (Zabbix, Grafana), automate workflows with GitLab CI/CD and Ansible, and maintain high-availability enterprise environments.',
+    'Computer Engineering graduate who went from fixing PCs to running an ISP’s private cloud.',
+    'I automate repetitive work with Ansible, Python and GitLab CI, and keep it all monitored.',
   ],
   email: 'ninjaosnnxkn@gmail.com',
   github: '', // add your GitHub URL here to show it on the site
@@ -26,7 +25,9 @@ export const profile = {
 // Headline numbers shown in the hero — every one comes straight from the CV
 export const stats = [
   { value: '4+', label: 'years in IT' },
-  { value: '50+', label: 'KVM hosts run' },
+  { value: '1,500+', label: 'VMs managed' },
+  { value: '50+', label: 'servers hands-on' },
+  { value: '1,500+', label: 'tickets resolved' },
   { value: '5', label: 'certifications', accent: true },
 ]
 
@@ -40,7 +41,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     label: 'Virtualization & Cloud',
-    note: 'On-prem private cloud at 50+ hosts',
+    note: 'Private cloud on KVM',
     tools: ['Apache CloudStack', 'KVM / libvirt', 'VMware ESXi', 'vSphere'],
   },
   { label: 'Containers', note: 'Workloads in production', tools: ['Kubernetes', 'Docker', 'Podman', 'ArgoCD', 'Kustomize'] },
@@ -120,13 +121,13 @@ export const training = [
 ]
 
 export const softSkills = [
-  'Adaptable to new environments, systems and evolving requirements',
-  'Clear communicator with technical and non-technical stakeholders',
-  'Customer-focused, with a strong commitment to service quality',
-  'Organized and detail-oriented in documenting issues and solutions',
-  'Quick learner who actively adopts new technologies',
-  'Strong problem-solving and troubleshooting under pressure',
-  'Collaborative team player with a professional mindset',
+  'Adapts fast to new systems',
+  'Clear with technical and non-technical people',
+  'Customer-focused',
+  'Documents everything',
+  'Quick learner',
+  'Calm under pressure',
+  'Team player',
 ]
 
 export type Project = {
@@ -143,14 +144,10 @@ export type Project = {
   pairs?: number[]
   focus?: number // stage highlighted in red in the diagram
   tag?: string // tracking label on the highlighted stage
-  problem: string
-  investigation: string
-  fix: string
-  result: string
+  solution: string // what I built, shown on the project
 }
 
-// Each project is written as an incident report: Problem → Investigation → Fix → Result.
-// Everything here comes from the CV — no invented numbers.
+// Everything here comes from the CV and from what I built — no invented numbers.
 export const projects: Project[] = [
   {
     id: 'private-cloud',
@@ -158,73 +155,120 @@ export const projects: Project[] = [
     title: 'On-prem private cloud',
     since: '2025 → now',
     featured: true,
-    summary: 'Designed, deployed and operate an Apache CloudStack private cloud on 50+ KVM hosts.',
+    summary: 'Apache CloudStack private cloud on 50+ KVM hosts.',
     stack: ['Apache CloudStack', 'KVM', 'libvirt', 'Dell / HPE / Cisco'],
     flow: [['CloudStack mgmt'], ['KVM host 01', 'KVM host 02', 'KVM host …', 'KVM host 50+'], ['VMs on demand']],
-    problem: 'Teams needed virtual machines on demand, on hardware the company owns, without waiting on manual setup.',
-    investigation: 'Planned capacity across the server fleet and worked out how hosts would be added, maintained and retired.',
-    fix: 'Designed, deployed and now operate an on-premises private cloud on Apache CloudStack with KVM hypervisors, covering capacity planning, host lifecycle and VM provisioning.',
-    result: '50+ KVM hosts run as one private cloud, with VMs provisioned from a single platform.',
+    solution: 'Designed and deployed CloudStack on KVM; I run capacity planning, host lifecycle and VM provisioning.',
   },
   {
     id: 'monitoring',
     name: 'zabbix-monitoring-20-proxies',
     title: 'Zabbix at scale',
     since: '2025 → now',
-    summary: 'Deployed Zabbix and run it at scale: 20+ Zabbix proxies reporting to one Zabbix server, plus Prometheus and Grafana.',
+    summary: 'One Zabbix server watching everything through 20+ proxies.',
     stack: ['Zabbix server', 'Zabbix proxy ×20+', 'Templates & triggers', 'Prometheus', 'Grafana'],
     flow: [['Servers', 'Network gear', 'Services'], ['Proxy 01', 'Proxy 02', 'Proxy …', 'Proxy 20+'], ['Zabbix server'], ['Grafana', 'Alerts']],
     focus: 1,
     tag: '0x5A 20+ PROXIES',
-    problem: 'Problems with servers and services had to be caught before they turned into outages for ISP customers.',
-    investigation: 'Mapped which hosts and services mattered most and which signals (availability, performance, resources) showed trouble early. With this many hosts and locations, data had to be collected close to them by proxies while keeping one central server.',
-    fix: 'Deployed Zabbix and now maintain and administer 20+ Zabbix proxies reporting to a single Zabbix server, with custom templates, items and triggers. Prometheus and Grafana add metrics and dashboards through service-specific exporters.',
-    result: 'One Zabbix server sees the whole infrastructure through 20+ proxies, with alerts and dashboards in one place.',
+    solution: 'Deployed Zabbix with 20+ proxies, custom templates and triggers; Prometheus and Grafana add metrics and dashboards.',
   },
   {
     id: 'storage-monitoring',
     name: 'storage-exporters-gitops',
     title: 'Storage monitoring (GitOps)',
     since: '2025 → now',
-    summary: 'One ArgoCD + Kustomize deployment on Kubernetes monitoring 4 storage arrays with Prometheus and Grafana.',
+    summary: '4 storage arrays monitored from one GitOps deployment.',
     stack: ['Kubernetes', 'ArgoCD', 'Kustomize', 'Prometheus', 'Grafana', 'Pure FlashArray', 'Pure FlashBlade', 'Dell PowerStore ×2'],
     flow: [['Git + ArgoCD'], ['Kustomize base'], ['FlashArray', 'FlashBlade', 'PowerStore 1', 'PowerStore 2'], ['Prometheus'], ['Grafana']],
     focus: 2,
     tag: '0x4C 4 OVERLAYS',
-    problem: 'Four storage arrays from two vendors (Pure FlashArray, Pure FlashBlade and two Dell PowerStore systems) had to be monitored from one place.',
-    investigation: 'Each array needs its own exporter settings, but the deployment around them is the same, so one shared definition with small per-array differences fits best.',
-    fix: 'Built one Kustomize base for the exporter deployment plus four overlays, one per storage array, synced to Kubernetes by a single ArgoCD application. Prometheus scrapes the exporters and Grafana shows the dashboards.',
-    result: 'All four storage arrays are monitored from one GitOps deployment: changes roll out from Git through ArgoCD, and adding an array means adding one overlay.',
+    solution: 'One Kustomize base plus an overlay per array, synced to Kubernetes by ArgoCD. Prometheus scrapes, Grafana shows.',
   },
   {
     id: 'cam-auto-reset',
     name: 'camera-poe-auto-reset',
     title: 'Camera self-healing',
     since: '2025 → now',
-    summary: 'Zabbix spots cameras that ping but send no image; a GitLab-run Python job finds their PoE port, power-cycles it and opens a ticket only if they stay down.',
+    summary: 'Hung cameras get power-cycled automatically.',
     stack: ['Zabbix', 'Zabbix Actions', 'GitLab CI/CD', 'Python', 'PoE switches', 'Ticketing'],
     flow: [['Zabbix alert'], ['GitLab job'], ['Find PoE port'], ['Power-cycle'], ['Cam recovered', 'Open ticket']],
     focus: 2,
     tag: '0x5D PYTHON SCAN',
-    problem: 'Cameras sometimes hang: they still answer ping but stop sending images, so someone had to find the right switch port and power-cycle them by hand.',
-    investigation: 'Ping alone shows these cameras as healthy, so detection had to check for the missing image. Fixing them meant finding which PoE switch port each camera sits on, across every building on the site.',
-    fix: 'Zabbix detects cameras that are pingable but have no image and fires an action that triggers a GitLab pipeline. A Python script lists the site or building PoE switches, searches each one for the affected cameras, power-cycles the port when it finds them, then tests each camera again. If a camera does not recover, the automation opens a ticket with the issue.',
-    result: 'Hung cameras are reset automatically without anyone touching a switch. Only cameras that stay down after the reset reach a person, as a ticket that already describes the problem.',
+    solution: 'Zabbix flags pingable cameras with no image and triggers a GitLab job. Python finds the camera on the PoE switches, power-cycles its port, re-tests it and opens a ticket only if it stays down.',
   },
   {
     id: 'vm-self-service',
     name: 'teams-vm-self-service',
     title: 'Self-service VM requests',
     since: '2025 → now',
-    summary: 'Users request a VM with a Microsoft Teams form; Power Automate sends it to me for approval, then GitLab CI runs an Ansible cloud module that creates the VM from the form details.',
+    summary: 'Users request VMs in Teams; I approve, automation builds them.',
     stack: ['Microsoft Teams', 'Power Automate', 'Approvals', 'GitLab CI/CD', 'Ansible', 'Ansible cloud module', 'Apache CloudStack'],
     flow: [['Teams form'], ['Power Automate'], ['GitLab CI'], ['Ansible module'], ['VM created']],
     focus: 1,
     tag: '0x6B APPROVAL',
-    problem: 'Creating VMs for users by hand meant collecting the details, checking each request and setting everything up manually every time.',
-    investigation: 'Every request needs the same information and the same sign-off, so the request form and the approval step could be standardized and the creation step automated.',
-    fix: 'Users submit a request form in Microsoft Teams. Power Automate sends it to me as an approval request; once I approve it, Power Automate triggers a GitLab CI pipeline that passes the form details to an Ansible playbook, and the Ansible cloud module creates the VM on the cloud environment.',
-    result: 'Users request VMs themselves, nothing is created without my approval, and every VM is built exactly as requested in the form.',
+    solution: 'A Teams form reaches me for approval through Power Automate, then GitLab CI runs an Ansible cloud module that builds the VM from the form.',
+  },
+]
+
+// Tools I automate with. Each card gets a small animated flow, like the project diagrams.
+// `logo` is a title from src/logos.tsx; anything missing there gets a lettered mark.
+export type AutomationTool = {
+  name: string
+  logo: string
+  use: string // one line: what I automate with it
+  flow: string[][]
+  focus: number // stage highlighted in the flow
+  tag: string // label on the highlighted stage
+}
+
+export const automationTools: AutomationTool[] = [
+  {
+    name: 'Ansible',
+    logo: 'Ansible',
+    use: 'Playbooks that configure servers and build VMs through the cloud module.',
+    flow: [['Playbook'], ['Inventory'], ['Servers/VMs']],
+    focus: 1,
+    tag: 'RUN',
+  },
+  {
+    name: 'GitLab CI/CD',
+    logo: 'GitLab CI/CD',
+    use: 'Pipelines that run deployments and start automation jobs.',
+    flow: [['Trigger'], ['Pipeline'], ['Deploy']],
+    focus: 1,
+    tag: 'CI',
+  },
+  {
+    name: 'Python & Bash',
+    logo: 'Python',
+    use: 'Scripts for routine jobs and network gear, like resetting a camera\'s PoE port.',
+    flow: [['Script'], ['PoE switches'], ['Port reset']],
+    focus: 1,
+    tag: 'SCAN',
+  },
+  {
+    name: 'Zabbix actions',
+    logo: 'Zabbix',
+    use: 'Alerts that start automation instead of waiting for a person.',
+    flow: [['Trigger'], ['Action'], ['GitLab job']],
+    focus: 1,
+    tag: 'FIRE',
+  },
+  {
+    name: 'Power Automate',
+    logo: 'Power Automate',
+    use: 'Approval flows from Microsoft Teams that hand off to pipelines.',
+    flow: [['Teams form'], ['Approval'], ['GitLab CI']],
+    focus: 1,
+    tag: 'OK',
+  },
+  {
+    name: 'ArgoCD + Kustomize',
+    logo: 'ArgoCD',
+    use: 'GitOps: what is in Git is what runs on Kubernetes.',
+    flow: [['Git'], ['ArgoCD'], ['Kubernetes']],
+    focus: 1,
+    tag: 'SYNC',
   },
 ]
 
@@ -243,37 +287,36 @@ const sysadminGroups = [
   {
     label: 'Cloud & servers',
     points: [
-      'Manage and maintain physical and virtual servers, ensuring high availability, performance and scalability.',
-      'Manage and maintain Dell, Cisco and HPE server hardware.',
-      'Design, deploy and operate an on-premises private cloud built on Apache CloudStack with KVM hypervisors (50+ hosts): capacity planning, host lifecycle management and VM provisioning.',
-      'Deploy and manage containerized workloads using Kubernetes, Docker and Podman.',
-      'Administer Linux systems (RHEL / CentOS / AlmaLinux / Rocky / Ubuntu): installation, configuration, patching, hardening and troubleshooting.',
+      'Manage 1,500+ VMs and work hands-on with 50+ Dell, HPE and Cisco servers.',
+      'Built and run the CloudStack private cloud (50+ KVM hosts).',
+      'Run container workloads on Kubernetes, Docker and Podman.',
+      'Administer RHEL, CentOS, AlmaLinux, Rocky and Ubuntu: install, patch, harden, troubleshoot.',
     ],
   },
   {
     label: 'Monitoring',
     points: [
-      'Deployed Zabbix and maintain and administer 20+ Zabbix proxies reporting to one Zabbix server, with custom templates, items and triggers to monitor infrastructure availability and performance.',
-      'Deploy and manage Grafana and Prometheus for metrics collection and visualization, with service-specific exporters.',
-      'Built GitOps storage monitoring for 4 arrays (Pure FlashArray, Pure FlashBlade, 2× Dell PowerStore): one ArgoCD application syncing a Kustomize base with 4 overlays to Kubernetes, scraped by Prometheus and shown in Grafana.',
-      'Monitor system performance, resource utilization and network traffic to proactively find and resolve issues.',
+      'Deployed Zabbix; run 20+ proxies with custom templates and triggers.',
+      'Prometheus and Grafana with service-specific exporters.',
+      'GitOps storage monitoring for 4 arrays (ArgoCD + Kustomize).',
+      'Track performance, resources and traffic to catch issues early.',
     ],
   },
   {
     label: 'Automation',
     points: [
-      'Automate repetitive tasks and monitoring workflows with Ansible and Bash to reduce downtime and manual effort.',
-      'Built self-healing for IP cameras: Zabbix detects cameras that ping but send no image and triggers a GitLab pipeline; a Python script finds each camera on the site\'s PoE switches, power-cycles its port, re-tests it and opens a ticket if it stays down.',
-      'Design and maintain GitLab CI/CD pipelines to automate deployments and streamline development workflows.',
-      'Built self-service VM provisioning: a Microsoft Teams form goes through a Power Automate approval to me, then triggers a GitLab CI pipeline that creates the VM on the cloud with an Ansible cloud module, using the form details.',
+      'Automate routine tasks with Ansible and Bash.',
+      'GitLab CI/CD pipelines for deployments.',
+      'Camera self-healing: Zabbix → GitLab → Python PoE reset.',
+      'Self-service VMs: Teams form → my approval → Ansible.',
     ],
   },
   {
     label: 'Operations',
     points: [
-      'Coordinate with cross-functional teams on system upgrades, migrations and new service deployments.',
-      'Maintain documentation of infrastructure configurations, incidents and resolutions for knowledge management.',
-      'Implement and regularly test backup, disaster-recovery and business-continuity plans.',
+      'Plan upgrades, migrations and new services with other teams.',
+      'Document configurations, incidents and fixes.',
+      'Run and test backup and disaster-recovery plans.',
     ],
   },
 ]
@@ -286,9 +329,10 @@ export const experience: Job[] = [
     company: 'Earthlink ISP',
     points: sysadminGroups.flatMap((g) => g.points),
     highlights: [
-      { value: '50+', label: 'KVM hosts in the private cloud' },
+      { value: '1,500+', label: 'VMs managed' },
+      { value: '50+', label: 'servers, hands-on' },
       { value: '20+', label: 'Zabbix proxies, one server' },
-      { value: '4', label: 'storage arrays on GitOps monitoring' },
+      { value: '50+', label: 'KVM hypervisors' },
     ],
     groups: sysadminGroups,
   },
@@ -297,12 +341,12 @@ export const experience: Job[] = [
     level: 'INFO',
     title: 'IT Help Desk Technician',
     company: 'Earthlink ISP',
+    highlights: [{ value: '1,500+', label: 'tickets resolved' }],
     points: [
-      'Provided first-level technical support for hardware, software and network issues for end users.',
-      'Installed, configured and maintained Windows and Linux operating systems and enterprise software.',
-      'Managed MikroTik routers and switches; supported Cisco DX devices and Cisco Unified Communications Manager (CUCM).',
-      'Handled building-level network support: cabling, switch configuration and connectivity troubleshooting.',
-      'Kept accurate records of support requests in the ticketing system and escalated complex issues appropriately.',
+      'Resolved 1,500+ tickets: first-line hardware, software and network support.',
+      'Installed and maintained Windows, Linux and business software.',
+      'Managed MikroTik routers and switches; supported Cisco DX and CUCM.',
+      'Building network support: cabling, switches and connectivity, with every request logged.',
     ],
   },
   {
@@ -311,9 +355,8 @@ export const experience: Job[] = [
     title: 'Computer Technician',
     company: 'Computer Hardware & Software Shop',
     points: [
-      'Diagnosed and repaired hardware faults in desktops and laptops, including component replacements and upgrades.',
-      'Installed and configured Windows and Linux; performed virus removal and data recovery.',
-      'Documented repair cases and gave customers technical guidance on hardware and software issues.',
+      'Repaired and upgraded desktops and laptops.',
+      'Installed Windows and Linux; removed malware and recovered data.',
     ],
   },
   {
@@ -322,9 +365,7 @@ export const experience: Job[] = [
     title: 'Bachelor of Computer Engineering',
     company: 'University of Technology, Baghdad',
     points: [
-      'Graduation project: Mobile Tourist Guidance Application, built with Flutter (frontend) and Firebase (backend).',
-      'Features: booking, space sharing, currency converter and city exploration.',
-      'Implemented Firebase Authentication, real-time database and cloud storage.',
+      'Graduation project: a tourist-guide mobile app in Flutter and Firebase (booking, currency converter, city guide).',
     ],
   },
 ]

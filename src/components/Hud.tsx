@@ -9,6 +9,7 @@ const SECTIONS = [
   { id: 'top', label: 'IDENT' },
   { id: 'about', label: 'PROFILE' },
   { id: 'skills', label: 'SKILLS' },
+  { id: 'automation', label: 'AUTOMATION' },
   { id: 'projects', label: 'PROJECTS' },
   { id: 'experience', label: 'LOGS' },
   { id: 'contact', label: 'CONTACT' },

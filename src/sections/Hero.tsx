@@ -102,7 +102,7 @@ export default function Hero({ ready }: { ready: boolean }) {
               ssh contact
             </a>
           </div>
-          <div data-fade className="mt-10 flex gap-8 font-mono text-xs uppercase tracking-wider text-muted">
+          <div data-fade className="mt-10 grid max-w-xl grid-cols-3 gap-x-5 gap-y-5 font-mono text-xs uppercase leading-snug tracking-wider text-muted sm:grid-cols-5">
             {stats.map((s) => (
               <div key={s.label}>
                 <div className={`text-2xl font-bold ${s.accent ? 'text-hud' : 'text-text'}`}>{s.value}</div>

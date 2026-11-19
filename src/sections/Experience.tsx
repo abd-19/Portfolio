@@ -19,16 +19,24 @@ function Bullets({ points, bright = false }: { points: string[]; bright?: boolea
 }
 
 // Big numbers for the current role; they count up when scrolled into view
+// tile grid per number of highlights (literal classes so Tailwind keeps them)
+const COLS: Record<number, string> = {
+  1: 'sm:max-w-xs',
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-3',
+  4: 'sm:grid-cols-2 lg:grid-cols-4',
+}
+
 function Highlights({ items }: { items: NonNullable<Job['highlights']> }) {
   return (
-    <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+    <ul className={`mt-6 grid gap-3 ${COLS[items.length] ?? 'sm:grid-cols-3'}`}>
       {items.map((h) => {
-        const n = parseInt(h.value, 10)
-        const suffix = h.value.replace(String(n), '')
+        const n = parseInt(h.value.replace(/,/g, ''), 10)
+        const suffix = h.value.replace(/[\d,]/g, '')
         return (
           <li key={h.label} className="flex items-center gap-4 border border-line bg-black/30 px-4 py-3 sm:block sm:p-4">
-            <div className="w-16 shrink-0 font-mono text-2xl font-bold text-hud glow-hud sm:w-auto sm:text-4xl">
-              <span data-count={n}>{n}</span>
+            <div className="w-24 shrink-0 font-mono text-2xl font-bold text-hud glow-hud sm:w-auto sm:text-4xl">
+              <span data-count={n}>{n.toLocaleString('en-US')}</span>
               {suffix}
             </div>
             <div className="text-sm text-muted sm:mt-1">{h.label}</div>
@@ -133,7 +141,7 @@ export default function Experience() {
           duration: 1.4,
           ease: 'power2.out',
           onUpdate: () => {
-            el.textContent = String(Math.round(state.v))
+            el.textContent = Math.round(state.v).toLocaleString('en-US')
           },
           scrollTrigger: { trigger: el, start: 'top 85%' },
         })
@@ -144,7 +152,7 @@ export default function Experience() {
 
   return (
     <section id="experience" ref={ref} className="relative mx-auto max-w-6xl px-4 py-32 sm:px-6">
-      <SectionTitle index="04" cmd="tail -f /var/log/career.log" title="Experience" />
+      <SectionTitle index="05" cmd="tail -f /var/log/career.log" title="Experience" />
       <div data-log className="relative pl-8 sm:pl-12">
         <div
           data-line

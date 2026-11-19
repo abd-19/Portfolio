@@ -25,7 +25,6 @@ const COMMANDS: Record<string, { help: string; run: () => ReactNode }> = {
     run: () => (
       <span>
         <span className="text-hud">{profile.name}</span> — {profile.shortRole} at Earthlink ISP, {profile.location}.
-        Linux, private cloud, monitoring and automation.
       </span>
     ),
   },
@@ -104,6 +103,7 @@ const COMMANDS: Record<string, { help: string; run: () => ReactNode }> = {
 const NAV: Record<string, string> = {
   'cd about': 'about',
   'cd skills': 'skills',
+  'cd automation': 'automation',
   'cd projects': 'projects',
   'cd experience': 'experience',
 }

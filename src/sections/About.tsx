@@ -3,7 +3,7 @@ import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { useGSAP } from '@gsap/react'
 import SectionTitle from '../components/SectionTitle'
-import { certs, profile, softSkills } from '../data'
+import { profile, softSkills } from '../data'
 
 export default function About() {
   const ref = useRef<HTMLElement>(null)
@@ -50,7 +50,6 @@ export default function About() {
   const facts = [
     ['$ whoami --job', `${profile.shortRole} @ Earthlink ISP`],
     ['$ cat /etc/location', profile.location],
-    ['$ ls /certs', certs.map((c) => c.short).join('  ')],
     ['$ cat /etc/education', 'B.Sc. Computer Engineering — University of Technology, Baghdad'],
   ]
 

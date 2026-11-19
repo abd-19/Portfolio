@@ -20,11 +20,10 @@ function useNarrow(query = '(max-width: 640px)') {
 const BOX_H = 36
 const TOP = 30 // room for stage labels / lock tag
 
-function layoutHorizontal(stages: string[][]) {
-  const W = 680
+function layoutHorizontal(stages: string[][], W = 680, linkGap = 34) {
   const pad = 8
   // boxes shrink when there are many stages so links keep room between columns
-  const boxW = Math.min(128, (W - 2 * pad - (stages.length - 1) * 34) / stages.length)
+  const boxW = Math.min(128, (W - 2 * pad - (stages.length - 1) * linkGap) / stages.length)
   const gap = 14
   const maxRows = Math.max(...stages.map((s) => s.length))
   const contentH = maxRows * (BOX_H + gap) - gap
@@ -75,16 +74,22 @@ export default function FlowDiagram({
   pairs = [],
   focus = 1,
   tag = '0x3A LOCK 0.97',
+  compact = false,
   className = '',
 }: {
   stages: string[][]
   pairs?: number[] // transitions drawn one-to-one
-  focus?: number // stage drawn in red, with the lock tag
+  focus?: number // stage drawn in green, with the lock tag
   tag?: string
+  compact?: boolean // small card-sized version: narrower and always left → right
   className?: string
 }) {
   const narrow = useNarrow()
-  const { W, H, boxes, vertical } = narrow ? layoutVertical(stages) : layoutHorizontal(stages)
+  const { W, H, boxes, vertical } = compact
+    ? layoutHorizontal(stages, 300, 26)
+    : narrow
+      ? layoutVertical(stages)
+      : layoutHorizontal(stages)
 
   const edges: { d: string; i: number }[] = []
   let n = 0
