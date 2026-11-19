@@ -1,14 +1,41 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import SectionTitle from '../components/SectionTitle'
 import { siRedhat } from 'simple-icons'
-import { certs, skillGroups } from '../data'
+import { automationTools, certs, projects, skillGroups } from '../data'
+import { logoForTool, Mark } from '../logos'
+import { slug } from '../util'
 
 const hex = (i: number) => '0x' + ((i + 1) * 17).toString(16).toUpperCase().padStart(2, '0')
 
+// ---- trace a tool to the projects / automation cards that use it ----
+const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+type Use = { label: string; id: string }
+const TARGETS = [
+  ...projects.map((p) => ({ label: p.title, id: `project-${p.id}`, text: [p.title, ...p.stack, p.solution].join(' ').toLowerCase() })),
+  ...automationTools.map((t) => ({ label: t.name, id: `auto-${slug(t.name)}`, text: [t.name, ...t.flow.flat(), t.use].join(' ').toLowerCase() })),
+]
+// whole name first ("GitLab CI/CD"); names like "KVM / libvirt" also match by their parts
+function usesOf(tool: string): Use[] {
+  const name = tool.toLowerCase()
+  const words = [name, ...(name.includes(' / ') ? name.split(' / ') : [])]
+  const res = words.map((w) => new RegExp(`(^|[^a-z0-9])${esc(w)}([^a-z0-9]|$)`))
+  return TARGETS.filter((t) => res.some((re) => re.test(t.text)))
+}
+// light up every card that uses the tool for a moment (the link scrolls to the first)
+function flash(uses: Use[]) {
+  for (const u of uses) {
+    const el = document.getElementById(u.id)
+    if (!el) continue
+    el.classList.add('is-hl')
+    setTimeout(() => el.classList.remove('is-hl'), 2600)
+  }
+}
+
 export default function Skills() {
   const ref = useRef<HTMLElement>(null)
+  const [trace, setTrace] = useState<{ card: string; uses: Use[] } | null>(null)
 
   useGSAP(
     () => {
@@ -51,21 +78,58 @@ export default function Skills() {
           <div
             data-card
             key={g.label}
-            className="group panel relative p-6 transition-colors duration-300 hover:border-hud"
+            data-spot
+            className="group panel relative p-6 pb-11 transition-colors duration-300 hover:border-hud"
           >
             <div aria-hidden className="font-mono text-[11px] font-bold uppercase text-muted">{hex(i)} TEXT 0.99</div>
             <h3 className="mt-2 text-lg font-bold text-fg">{g.label}</h3>
             <p className="mt-1 text-sm text-muted">{g.note}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
-              {g.tools.map((t) => (
-                <li
-                  key={t}
-                  className="border border-line px-2.5 py-1 font-mono text-xs text-text transition-colors duration-300 group-hover:border-fg/30"
-                >
-                  {t}
-                </li>
-              ))}
+              {g.tools.map((t) => {
+                const logo = logoForTool(t)
+                const uses = usesOf(t)
+                const body = (
+                  <>
+                    {logo ? (
+                      <Mark logo={logo} className="h-3.5 w-3.5 shrink-0 text-fg/70 transition-colors group-hover/chip:text-hud" />
+                    ) : (
+                      <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-fg/30" />
+                    )}
+                    {t}
+                  </>
+                )
+                const chip = 'group/chip flex items-center gap-1.5 border px-2.5 py-1 font-mono text-xs text-text transition-colors duration-300'
+                return (
+                  <li key={t}>
+                    {uses.length ? (
+                      <a
+                        href={`#${uses[0].id}`}
+                        onClick={() => flash(uses)}
+                        onMouseEnter={() => setTrace({ card: g.label, uses })}
+                        onMouseLeave={() => setTrace(null)}
+                        onFocus={() => setTrace({ card: g.label, uses })}
+                        onBlur={() => setTrace(null)}
+                        title={`Used in: ${uses.map((u) => u.label).join(', ')}`}
+                        className={`${chip} border-hud/30 hover:border-hud hover:text-hud`}
+                      >
+                        {body}
+                      </a>
+                    ) : (
+                      <span className={`${chip} border-line group-hover:border-fg/30`}>{body}</span>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
+            {/* where the hovered tool is used */}
+            <p
+              aria-hidden
+              className={`absolute inset-x-6 bottom-4 truncate font-mono text-[11px] text-hud transition-opacity duration-200 ${
+                trace?.card === g.label ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              → {trace?.card === g.label ? trace.uses.map((u) => u.label).join(' · ') : ''}
+            </p>
             {/* corner ticks, light up red on hover */}
             <span className="absolute -left-px -top-px h-3 w-3 border-l border-t border-fg/60 transition-colors group-hover:border-hud" />
             <span className="absolute -bottom-px -right-px h-3 w-3 border-b border-r border-fg/60 transition-colors group-hover:border-hud" />
@@ -94,6 +158,7 @@ export default function Skills() {
                 data-cert
                 data-lock
                 key={c.short}
+                data-spot
                 className="group panel relative flex flex-col p-5 transition-colors duration-300 hover:border-hud hover:bg-hud/[0.06]"
               >
                 <div className="flex items-start justify-between gap-3">

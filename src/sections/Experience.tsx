@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { AnimatePresence, motion } from 'motion/react'
 import SectionTitle from '../components/SectionTitle'
+import CareerRail from '../components/CareerRail'
 import { experience, type Job } from '../data'
 
 function Bullets({ points, bright = false }: { points: string[]; bright?: boolean }) {
@@ -153,6 +154,7 @@ export default function Experience() {
   return (
     <section id="experience" ref={ref} className="relative mx-auto max-w-6xl px-4 py-32 sm:px-6">
       <SectionTitle index="05" cmd="tail -f /var/log/career.log" title="Experience" />
+      <CareerRail />
       <div data-log className="relative pl-8 sm:pl-12">
         <div
           data-line
@@ -162,13 +164,13 @@ export default function Experience() {
           {experience.map((e, k) => {
             const current = e.time.includes('now')
             return (
-              <div data-entry key={e.time} className="relative">
+              <div data-entry key={e.time} id={`exp-${k}`} className="relative scroll-mt-28">
                 <span
                   className={`absolute -left-[29px] top-2 h-3 w-3 border-2 bg-bg sm:-left-[37px] ${
                     current ? 'border-hud shadow-[0_0_10px_rgba(61,255,139,0.7)]' : 'border-fg/40'
                   }`}
                 />
-                <div className={`panel p-5 sm:p-6 ${current ? 'sm:p-8' : ''}`}>
+                <div data-spot className={`panel relative p-5 sm:p-6 ${current ? 'sm:p-8' : ''}`}>
                   <div className="font-mono text-xs text-muted">
                     [{e.time}]{' '}
                     <span className={e.level === 'EDU' ? 'text-warn' : 'text-ok'}>{e.level}</span>{' '}

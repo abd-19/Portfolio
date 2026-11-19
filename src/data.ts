@@ -13,7 +13,6 @@ export const profile = {
     'Computer Engineering graduate who went from fixing PCs to running an ISP’s private cloud.',
     'I automate repetitive work with Ansible, Python and GitLab CI, and keep it all monitored.',
   ],
-  email: 'ninjaosnnxkn@gmail.com',
   github: '', // add your GitHub URL here to show it on the site
   linkedin: 'https://linkedin.com/in/abdullah-mohammed-552159302',
   // Hero camera feed. Put your photo in /public and set its file name here ('' hides the feed).
@@ -370,9 +369,8 @@ export const experience: Job[] = [
   },
 ]
 
-// Contact links; GitHub only appears once a URL is set above
+// Contact links (no email on the site, by choice); GitHub only appears once a URL is set above
 export const contactLinks = [
-  { key: 'email', label: profile.email, href: `mailto:${profile.email}`, external: false },
   { key: 'linkedin', label: profile.linkedin.replace('https://', ''), href: profile.linkedin, external: true },
   ...(profile.github
     ? [{ key: 'github', label: profile.github.replace('https://', ''), href: profile.github, external: true }]

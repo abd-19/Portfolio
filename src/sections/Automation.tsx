@@ -5,6 +5,7 @@ import SectionTitle from '../components/SectionTitle'
 import FlowDiagram from '../components/FlowDiagram'
 import { ALL_LOGOS, Mark, type Logo } from '../logos'
 import { automationTools } from '../data'
+import { slug } from '../util'
 
 // The tools I automate with: one card each, with a small live flow (packets moving
 // through the stages), drawn the same way as the project architecture diagrams.
@@ -52,8 +53,11 @@ export default function Automation() {
           <article
             data-auto
             data-lock
+            data-spot
+            data-tilt
+            id={`auto-${slug(t.name)}`}
             key={t.name}
-            className="group panel relative flex flex-col p-5 transition-colors duration-300 hover:border-hud"
+            className="group panel relative flex scroll-mt-28 flex-col p-5 transition-[border-color,box-shadow] duration-300 hover:border-hud"
           >
             <div className="flex items-center gap-3">
               <Mark logo={logoFor(t.logo)} className="h-8 w-8 shrink-0 text-fg/85 transition-colors duration-300 group-hover:text-hud" />

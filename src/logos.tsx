@@ -90,3 +90,19 @@ export function Mark({ logo, className }: { logo: Logo; className: string }) {
     </svg>
   )
 }
+
+// skill-chip name → logo title, where the two differ
+const ALIAS: Record<string, string> = {
+  RHEL: 'Red Hat',
+  'Apache CloudStack': 'CloudStack',
+  'KVM / libvirt': 'KVM / QEMU',
+  'VMware ESXi': 'VMware',
+  vSphere: 'VMware',
+  'Cisco CUCM': 'Cisco',
+  'Dell PowerStore': 'Dell',
+}
+
+export function logoForTool(name: string): Logo | undefined {
+  const title = ALIAS[name] ?? name
+  return ALL_LOGOS.find((l) => l.title === title)
+}

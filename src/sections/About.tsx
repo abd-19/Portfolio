@@ -64,7 +64,7 @@ export default function About() {
         </div>
         <div data-cards className="space-y-3 font-mono text-sm">
           {facts.map(([k, v]) => (
-            <div data-card key={k} className="panel p-4">
+            <div data-card data-spot key={k} className="panel relative p-4">
               <div className="text-muted">{k}</div>
               <div className="mt-1 text-fg">{v}</div>
             </div>

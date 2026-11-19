@@ -121,6 +121,11 @@ export default function FloatingLogos() {
       ref={ref}
       aria-hidden
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-0 transition-opacity duration-[1500ms]"
+      // logos stay strong in the side margins and fade behind the reading column
+      style={{
+        maskImage:
+          'linear-gradient(to right, #000 calc(50% - 640px), rgba(0,0,0,0.25) calc(50% - 470px), rgba(0,0,0,0.25) calc(50% + 470px), #000 calc(50% + 640px))',
+      }}
     >
       {items.map((f) => (
         <div

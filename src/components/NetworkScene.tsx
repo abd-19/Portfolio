@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { reducedMotion } from '../motion'
@@ -150,12 +150,14 @@ function Network() {
 
 export default function NetworkScene() {
   const wrap = useRef<HTMLDivElement>(null)
+  const [live, setLive] = useState(true)
 
-  // full strength on the hero, fades to a faint background once you start reading
+  // full strength on the hero, gone once you start reading (and it stops rendering then)
   useEffect(() => {
     const onScroll = () => {
       const t = Math.min(1, window.scrollY / (window.innerHeight * 0.8))
-      if (wrap.current) wrap.current.style.opacity = String(1 - t * 0.8)
+      if (wrap.current) wrap.current.style.opacity = String(1 - t)
+      setLive(t < 1)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -166,7 +168,7 @@ export default function NetworkScene() {
     <div ref={wrap} className="pointer-events-none fixed inset-0 z-0" aria-hidden>
       <Canvas
         dpr={[1, 1.5]}
-        frameloop={reducedMotion ? 'demand' : 'always'}
+        frameloop={reducedMotion ? 'demand' : live ? 'always' : 'never'}
         camera={{ position: [0, 0, 9], fov: 50 }}
         gl={{ antialias: true, alpha: true }}
         eventSource={document.getElementById('root')!}

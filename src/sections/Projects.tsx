@@ -94,7 +94,11 @@ export default function Projects() {
       </p>
 
       {/* featured project: summary + solution, diagram below; always visible */}
-      <article data-featured className="panel brackets grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:gap-10">
+      <article
+        data-featured
+        id={`project-${featured.id}`}
+        className="panel brackets grid scroll-mt-28 gap-8 p-6 transition-[border-color,box-shadow] duration-300 sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:gap-10"
+      >
         <div>
           <div className="flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-wider">
             <span className="bg-hudfill px-2 py-0.5 font-bold text-black">Featured</span>
@@ -116,11 +120,14 @@ export default function Projects() {
           return (
             <button
               data-pcard
+              data-spot
+              data-tilt
+              id={`project-${p.id}`}
               key={p.id}
               aria-expanded={isOpen}
               aria-controls="project-detail"
               onClick={() => setOpen(isOpen ? null : p.id)}
-              className={`group relative flex flex-col border p-5 text-left transition-colors duration-300 ${
+              className={`group relative flex scroll-mt-28 flex-col border p-5 text-left transition-[border-color,background-color,box-shadow] duration-300 ${
                 isOpen ? 'border-hud bg-hud/[0.07]' : 'panel hover:border-fg/50'
               }`}
             >

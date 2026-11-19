@@ -12,6 +12,7 @@ import Tracker from './components/Tracker'
 import TrackTrail from './components/TrackTrail'
 import TextReveal from './components/TextReveal'
 import FloatingLogos from './components/FloatingLogos'
+import CardFx from './components/CardFx'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Skills from './sections/Skills'
@@ -86,6 +87,7 @@ export default function App() {
       {booted && <Tracker />}
       {booted && <TrackTrail />}
       {booted && <TextReveal />}
+      {booted && <CardFx />}
       <main id="main" tabIndex={-1} className="relative z-10 outline-none">
         <Hero ready={booted} />
         <About />
