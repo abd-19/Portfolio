@@ -178,7 +178,7 @@ export const projects: Project[] = [
     since: '2025 → now',
     summary: '4 storage arrays monitored from one GitOps deployment.',
     stack: ['Kubernetes', 'ArgoCD', 'Kustomize', 'Prometheus', 'Grafana', 'Pure FlashArray', 'Pure FlashBlade', 'Dell PowerStore ×2'],
-    flow: [['Git + ArgoCD'], ['Kustomize base'], ['FlashArray', 'FlashBlade', 'PowerStore 1', 'PowerStore 2'], ['Prometheus'], ['Grafana']],
+    flow: [['Git + ArgoCD'], ['Kustomize base'], ['Storage 1', 'Storage 2', 'Storage 3', 'Storage 4'], ['Prometheus'], ['Grafana']],
     focus: 2,
     tag: '0x4C 4 OVERLAYS',
     solution: 'One Kustomize base plus an overlay per array, synced to Kubernetes by ArgoCD. Prometheus scrapes, Grafana shows.',
